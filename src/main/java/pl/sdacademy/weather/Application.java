@@ -1,10 +1,10 @@
 package pl.sdacademy.weather;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
+import pl.sdacademy.weather.service.UserInterface;
 
 @Configuration
 @ComponentScan("pl.sdacademy.weather")
@@ -16,5 +16,10 @@ public class Application {
 
         ApplicationContext context = new AnnotationConfigApplicationContext(Application.class);
         context.getBean(UserInterface.class).start();
+    }
+
+    @Bean
+    public Gson gson() {
+        return new GsonBuilder().create();
     }
 }
