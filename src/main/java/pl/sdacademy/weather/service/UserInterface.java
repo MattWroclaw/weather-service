@@ -1,19 +1,17 @@
 package pl.sdacademy.weather.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.sdacademy.weather.dto.WeatherData;
 import pl.sdacademy.weather.exception.CityNotFoundException;
 
 import java.util.Scanner;
 
+@RequiredArgsConstructor
 @Component
 public class UserInterface {
 
-    private WeatherApiService weatherApiService;
-
-    public UserInterface(WeatherApiService weatherApiService) {
-        this.weatherApiService = weatherApiService;
-    }
+    private final WeatherApiService weatherApiService;
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
