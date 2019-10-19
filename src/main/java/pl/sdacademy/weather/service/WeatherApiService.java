@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import pl.sdacademy.weather.dto.WeatherData;
+import pl.sdacademy.weather.exception.CityNotFoundException;
 
 @Component
 public class WeatherApiService {
@@ -25,7 +26,15 @@ public class WeatherApiService {
 
     public WeatherData fetchWeather(String city) {
         String fullUrl = url.replace("{city}", city).replace("{appId}", apiKey);
-        ResponseEntity<WeatherData> response = restTemplate.getForEntity(fullUrl, WeatherData.class);
-        return response.getBody();
+        try {
+            ResponseEntity<WeatherData> response = restTemplate.getForEntity(fullUrl, WeatherData.class);
+            return response.getBody();
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+                throw new CityNotFoundException(city);
+            }
+
+            throw e;
+        }
     }
 }
