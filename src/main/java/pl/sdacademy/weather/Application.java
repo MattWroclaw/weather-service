@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import pl.sdacademy.weather.service.UserInterface;
 
 @Configuration
@@ -21,5 +22,10 @@ public class Application {
     @Bean
     public Gson gson() {
         return new GsonBuilder().create();
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }
