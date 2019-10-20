@@ -3,7 +3,9 @@ package pl.sdacademy.weather;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.*;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.client.RestTemplate;
 import pl.sdacademy.weather.service.UserInterface;
 
@@ -27,5 +29,14 @@ public class Application {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setBasename("classpath:messages");
+        messageSource.setFallbackToSystemLocale(false);
+        return messageSource;
     }
 }

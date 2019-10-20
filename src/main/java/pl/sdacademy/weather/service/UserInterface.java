@@ -1,10 +1,13 @@
 package pl.sdacademy.weather.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import pl.sdacademy.weather.dto.WeatherData;
 import pl.sdacademy.weather.exception.CityNotFoundException;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 @RequiredArgsConstructor
@@ -12,11 +15,18 @@ import java.util.Scanner;
 public class UserInterface {
 
     private final WeatherApiService weatherApiService;
+    private final MessageSource messageSource;
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Choose your locale:");
+        String localeString = scanner.nextLine();
+        Locale locale = new Locale(localeString);
+
         do {
-            System.out.print("City name: ");
+            String cityName = messageSource.getMessage("city.name", null, locale);
+            System.out.print(cityName + ": ");
             String city = scanner.nextLine();
             System.out.println("Fetching weather data for city " + city);
             try {
