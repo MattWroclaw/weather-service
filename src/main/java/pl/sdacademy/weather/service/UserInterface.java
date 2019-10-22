@@ -28,14 +28,17 @@ public class UserInterface {
             String cityName = messageSource.getMessage("city.name", null, locale);
             System.out.print(cityName + ": ");
             String city = scanner.nextLine();
-            System.out.println("Fetching weather data for city " + city);
+            String collectingData = messageSource.getMessage("collect.data", null, locale);
+            System.out.println(collectingData + city);
             try {
                 WeatherData weather = weatherApiService.fetchWeather(city);
-                System.out.println("Current temperature in " + city + ": " + weather.getMain().getTemp() + "\u00B0C");
+                String curretnTemp = messageSource.getMessage("current.temp", null, locale);
+                System.out.println(curretnTemp + city + ": " + weather.getMain().getTemp() + "\u00B0C");
             } catch (CityNotFoundException e) {
                 System.out.println(e.getMessage());
             }
-            System.out.println("Search again? (Y/N)");
+            String nextCity = messageSource.getMessage("next.city", null, locale);
+            System.out.println(nextCity);
             String again = scanner.nextLine();
             if ("N".equalsIgnoreCase(again)) return;
         } while (true);
